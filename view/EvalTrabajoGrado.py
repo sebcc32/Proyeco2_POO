@@ -16,8 +16,7 @@ def agregar_acta(st, controller):
     acta_obj.autor = st.text_input("Nombre estudiante")
     acta_obj.tipo_de_trabajo = st.selectbox('¿Tipo de trabajo?', ["Aplicado", "investigacion"])
     acta_obj.directora = st.text_input("Nombre Directora")
-    acta_obj.codirector = st.text_input("Nombre Co-director")
-    st.write("Si no hay codirector poner: N/A")
+    acta_obj.codirector = st.text_input("Nombre Co-director", "N/A")
     acta_obj.jurado1 = st.text_input("Nombre Primer Jurado")
     acta_obj.jurado2 = st.text_input("Nombre Segundo Jurado")
     enviado_btn = st.button("Enviar")
@@ -27,23 +26,31 @@ def agregar_acta(st, controller):
     return controller
 
 def agregar_evaluacion(st, controller):
+    contador = 0
     actas_llaves = controller.actas.keys()
     acta_evaluar = st.selectbox("¿Que acta vas a calificar?", actas_llaves)  # Asi encuentro todas las llaves del directorio acta
 
-    criterio_obj = Criterio()
-    llave = st.selectbox('Criterio a evaluar?', lista_criterios)
-    criterio_obj.descripcion = str(llave)
-    criterio_obj.observacion = st.text_input("Observaciones adicionales")
-    criterio_obj.nota1 = st.number_input("Nota primer jurado")                        #aqui lleno los objetos de la clase criterio
-    criterio_obj.nota2 = st.number_input("Nota segundo jurado")
-    criterio_obj.ponderado = lista_criterios[llave]
-    st.write("El ponderado es de: ", criterio_obj.ponderado) #pon el ponderado automaticamente de lista_criterios si puedes y vuelve a poner los ponderados en el jsonxD
+    #criterio_obj = Criterio()
+    #llave = st.selectbox('Criterio a evaluar?', lista_criterios)
+    for clave in lista_criterios:
+        criterio_obj = Criterio()
+        st.title( clave)
+        criterio_obj.descripcion = str(clave)
+        criterio_obj.observacion = st.text_input("Observaciones adicionales", key = contador )
+        contador += 1
+        criterio_obj.nota1 = st.number_input("Nota primer jurado", key = contador)
+        contador += 1                            #aqui lleno los objetos de la clase criterio
+        criterio_obj.nota2 = st.number_input("Nota segundo jurado", key = contador)
+        contador += 1
+        criterio_obj.ponderado = lista_criterios[clave]
+        st.write("El ponderado es de: ", criterio_obj.ponderado) #pon el ponderado automaticamente de lista_criterios si puedes y vuelve a poner los ponderados en el jsonxD
 
 
-    enviado_btn = st.button("Enviar")
-    if enviado_btn:
-        controller.actas[acta_evaluar].agregar_criterio(criterio_obj)     #aqui estoy metiendo los objetos de criterio
-        st.write("El archivo se ha creado exitosamente")                   #al diccionario criterio que tengo en acta que elegi
+        enviado_btn = st.button("Enviar", key = contador )
+        if enviado_btn:
+            controller.actas[acta_evaluar].agregar_criterio(criterio_obj)     #aqui estoy metiendo los objetos de criterio
+            st.write("El archivo se ha creado exitosamente")
+        contador += 1                                                            #al diccionario criterio que tengo en acta que elegi
 
     # Retorna el controlador pq solo las colecciones se pasan en python por referencia,
     # entonces de esta manera se actualiza el controlador en la vista principal
