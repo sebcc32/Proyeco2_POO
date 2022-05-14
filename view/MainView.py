@@ -33,10 +33,10 @@ class MainView:
                                        menu_icon="cast", default_index=0, orientation="horizontal",
                                        styles={
                                            "container": {"padding": "0!important", "background-color": "#fafafa"},
-                                           "icon": {"color": "#c4c4c4", "font-size": "25px"},
-                                           "nav-link": {"color": "#c4c4c4", "font-size": "25px", "text-align": "left",
-                                                        "margin": "0px", "--hover-color": "#6689ff"},
-                                           "nav-link-selected": {"background-color": "#0b4bff", "color": "white"}, })
+                                           "icon": {"color": "#000000", "font-size": "25px"},
+                                           "nav-link": {"color": "#000000", "font-size": "25px", "text-align": "left",
+                                                        "margin": "0px", "--hover-color": "#FFFFFF"},
+                                           "nav-link-selected": {"background-color": "#2C6394", "color": "white"}, })
 
     def controlar_menu(self):
         if self.menu_actual == "Asistente":
@@ -44,7 +44,7 @@ class MainView:
                 self.menu_actual = option_menu("Menu", ["Asistente", 'Crear Acta', 'Ver Historicos'],
                                                icons=["person", 'mortarboard', 'stack-overflow'],
                                                menu_icon="display", default_index=0,
-                                               styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
+                                               styles={"nav-link-selected": {"background-color": "#2C6394"}, })
 
             if self.menu_actual == "Asistente":
                 mesaje_inicio_asistente(st)
@@ -58,7 +58,7 @@ class MainView:
                 self.menu_actual = option_menu('Menu', ["Jurados", 'Exportar Acta', 'Evaluar Trabajo'],
                                                icons=["briefcase", 'file-pdf', 'pencil-square'],
                                                menu_icon="display", default_index=0,
-                                               styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
+                                               styles={"nav-link-selected": {"background-color": "#2C6394"}, })
 
             if self.menu_actual == "Jurados":
                 mesaje_inicio_jurados(st)
@@ -71,7 +71,7 @@ class MainView:
                                                         'Editar Criterios'],
                                                icons=["cast", 'vector-pen', 'stack-overflow'],
                                                menu_icon="display", default_index=0,
-                                               styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
+                                               styles={"nav-link-selected": {"background-color": "#2C6394"}, })
 
             if self.menu_actual == "Directora":
                 mesaje_inicio_directora(st)
