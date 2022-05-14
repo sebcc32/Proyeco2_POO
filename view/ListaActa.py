@@ -1,4 +1,3 @@
-from view.EvalTrabajoGrado import agregar_acta
 
 def listar_actas(st, controller):
     #Itera los elementos de evaluacion agregados y los muestra
