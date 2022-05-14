@@ -1,10 +1,22 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
+from controller.Controlador import EvaluadorController
+from view.Inicio import mesaje_inicio_asistente, mesaje_inicio_jurados, mesaje_inicio_directora
+from view.EvalTrabajoGrado import agregar_acta, agregar_evaluacion
+from view.ListaActa import listar_actas
+from view.EditarCriterios import base
 
 class MainView:
     def __init__(self) -> None:
         super().__init__()
+
+        if 'main_view' not in st.session_state:
+            self.controller = EvaluadorController()
+            st.session_state['main_view'] = self
+        else:
+            self.menu_actual = st.session_state.main_view.menu_actual
+            self.controller = st.session_state.main_view.controller
 
         self._dibujar_layout()
 
@@ -34,12 +46,24 @@ class MainView:
                                                menu_icon="display", default_index=0,
                                                styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
 
+            if self.menu_actual == "Asistente":
+                mesaje_inicio_asistente(st)
+            elif self.menu_actual == "Crear Acta":
+                agregar_acta(st, self.controller)
+            elif self.menu_actual == "Ver Historicos":
+                listar_actas(st, self.controller)
+
         elif self.menu_actual == "Jurados":
             with st.sidebar:
                 self.menu_actual = option_menu('Menu', ["Jurados", 'Exportar Acta', 'Evaluar Trabajo'],
                                                icons=["briefcase", 'file-pdf', 'pencil-square'],
                                                menu_icon="display", default_index=0,
                                                styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
+
+            if self.menu_actual == "Jurados":
+                mesaje_inicio_jurados(st)
+            elif self.menu_actual == "Evaluar Trabajo":
+                agregar_evaluacion(st, self.controller)
 
         elif self.menu_actual == "Directora":
             with st.sidebar:
@@ -49,7 +73,12 @@ class MainView:
                                                menu_icon="display", default_index=0,
                                                styles={"nav-link-selected": {"background-color": "#0b4bff"}, })
 
-
+            if self.menu_actual == "Directora":
+                mesaje_inicio_directora(st)
+            elif self.menu_actual == "Ver Historicos":
+                listar_actas(st, self.controller)
+            elif self.menu_actual == "Editar Criterios":
+                base(st)
 
 # Main call
 if __name__ == "__main__":
