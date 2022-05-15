@@ -37,12 +37,12 @@ def agregar_evaluacion(st, controller):
     contador = 0
     actas_llaves = controller.actas.keys()
     acta_evaluar = st.selectbox("¿Que acta vas a calificar?", actas_llaves)  # Asi encuentro todas las llaves del directorio acta
-
+    nota = 0
     criterios_temp = {}
     #llave = st.selectbox('Criterio a evaluar?', lista_criterios)
     for clave in lista_criterios:
         criterio_obj = Criterio()
-        st.title( clave)
+        st.title(clave)
         criterio_obj.descripcion = str(clave)
         criterio_obj.observacion = st.text_input("Observaciones adicionales", key = contador )
         contador += 1
@@ -53,10 +53,12 @@ def agregar_evaluacion(st, controller):
         criterio_obj.ponderado = lista_criterios[clave]
         st.write("El ponderado es de: ", criterio_obj.ponderado) #pon el ponderado automaticamente de lista_criterios si puedes y vuelve a poner los ponderados en el jsonxD
         criterios_temp[criterio_obj.descripcion] = criterio_obj
+        nota += ( ( (criterio_obj.nota1 + criterio_obj.nota2) / 2 ) * criterio_obj.ponderado )
 
     enviado_btn = st.button("Enviar")
     if enviado_btn:
         controller.actas[acta_evaluar].agregar_criterio(criterios_temp)     #aqui estoy metiendo los objetos de criterio
+        controller.actas[acta_evaluar].agregar_nota_definitiva(nota)
         st.write("El archivo se ha creado exitosamente")                                                           #al diccionario criterio que tengo en acta que elegi
 
     # Retorna el controlador pq solo las colecciones se pasan en python por referencia,
