@@ -15,11 +15,15 @@ class Acta:
         self.codirector = " "
         self.jurado1 = " "
         self.jurado2 = " "
+        self.nota = ""
 
         self.criterio = {}
 
     def agregar_criterio(self, criterio):
         self.criterio = criterio
+
+    def agregar_nota_definitiva(self, nota):
+        self.nota = nota
 
     def __str__(self) -> str:
         return json.dumps(self.__dict__)
