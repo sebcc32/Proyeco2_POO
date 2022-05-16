@@ -1,45 +1,74 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import os
 
-def crear_pdf():
+def crear_pdf(acta):
 
     archivo = canvas.Canvas("form.pdf", pagesize=letter)
     archivo.setLineWidth(.3)
-    archivo.setFont('Helvetica', 12)
-
-    archivo.drawString(30,660,'Trabajo de grado denominado: ')
-    archivo.drawString(30, 640, 'Autor: ')
-    archivo.drawString(250, 640, 'ID: ')
-    archivo.drawString(30, 620, 'Periodo: ')
-    archivo.drawString(30, 600, 'Director: ')
-    archivo.drawString(30, 580, 'Co-Director: ')
-    archivo.drawString(30, 560, 'Enfasis en: ')
-    archivo.drawString(30, 540, 'Modalidad: ')
-    archivo.drawString(30, 520, 'Jurado 1: ')
-    archivo.drawString(30, 500, 'Jurado 2: ')
-    archivo.drawString(30, 460, 'En atencion al desarrollo de este Trabajo de Grado y al documento y sustentacion que presento el/la')
-    archivo.drawString(30, 440, 'autor(a), los Jurados damos las siguientes calificaciones parciales y observaciones (los criterios')
-    archivo.drawString(30, 420, 'a evaluar y sus ponderaciones se estipulan en el articulo 7.1 de las Directrices para Trabajo de')
-    archivo.drawString(30, 400, 'Grado de Maestria):')
-    #archivo.drawString(500,750,"27/10/2016")
-    #archivo.line(480,747,580,747)
 
     archivo.setFont('Helvetica-Bold', 13)
     archivo.drawString(222,745,'FACULTAD DE INGENIERIA')
     archivo.drawString(224, 725, 'MAESTRIA EN INGENIERIA')
 
+    archivo.setFont('Helvetica', 12)
+    archivo.drawString(30, 660, f'Nombre del trabajo: {acta.nombre_del_trabajo}')
+    archivo.drawString(30, 640, f'Autor: {acta.autor}')
+    archivo.drawString(30, 620, f'Tipo de trabajo: {acta.tipo_de_trabajo}')
+    archivo.drawString(30, 600, f'Director: {acta.directora}')
+    archivo.drawString(30, 580, f'Co-Director: {acta.codirector}')
+    archivo.drawString(30, 560, f'Jurado 1: {acta.jurado1}')
+    archivo.drawString(30, 540, f'Jurado 2: {acta.jurado2}')
+    archivo.drawString(30, 500, 'En atencion al desarrollo de este Trabajo de Grado y al documento y sustentacion que presento el/la')
+    archivo.drawString(30, 480, 'autor(a), los Jurados damos las siguientes calificaciones parciales y observaciones (los criterios')
+    archivo.drawString(30, 460, 'a evaluar y sus ponderaciones se estipulan en el articulo 7.1 de las Directrices para Trabajo de')
+    archivo.drawString(30, 440, 'Grado de Maestria):')
+
     archivo.setFont('Helvetica-Bold', 12)
     archivo.drawString(170, 680, 'ACTA DE EVALUACION DE TRABAJO DE GRADO')
-    archivo.drawString(30, 700, 'ACTA: ')
-    archivo.drawString(450, 700, 'FECHA: ')
-
-    archivo.setFont('Helvetica', 12)
-    #archivo.drawString(500,725,"<NOMBRE>")
-    #archivo.line(378,723,580,723)
-
-    #archivo.drawString(30,703,'ETIQUETA:')
-    #archivo.line(120,700,580,700)
-    #archivo.drawString(120,500,"<ASUNTO DE LA CARTA GENERICO>")
+    archivo.drawString(30, 700, f'ACTA: {acta.numero}')
+    archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
     archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
 
+    identificador = 1
+    y = 400
+    for clave in acta.criterio:
+        crit = acta.criterio[clave]
+
+        archivo.setFont('Helvetica-Bold', 12)
+        archivo.drawString(30, y, f'{identificador}. {crit.descripcion}')
+        identificador += 1
+        archivo.setFont('Helvetica', 12)
+        nota_parcial = ( (crit.nota1 + crit.nota2) / 2 ) * crit.ponderado
+        y-=20
+        archivo.drawString(30, y, f'Nota parcial: {nota_parcial}')
+        archivo.drawString(450, y, f'Ponderado: {crit.ponderado * 100}%')
+        y-=20
+        archivo.drawString(30, y, f'Observaciones: {crit.observacion}')
+        y -= 20
+        archivo.line(30, y, 580, y)
+        y -= 20
+        archivo.line(30, y, 580, y)
+        y -= 20
+        if( y <= 0 ):
+            y = 660
+            archivo.showPage()
+            archivo.setFont('Helvetica-Bold', 12)
+            archivo.drawString(170, 680, 'ACTA DE EVALUACION DE TRABAJO DE GRADO')
+            archivo.drawString(30, 700, f'ACTA: {acta.numero}')
+            archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
+            archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
+
     archivo.save()
+    os.startfile("form.pdf")
+
+def elegir_acta_imprimir(st, controller):
+    
+    st.title("Actas almacenadas:")
+
+    actas_llaves = controller.actas.keys()
+    acta_evaluar = st.selectbox("¿Que acta quieres imprimir?", actas_llaves)
+
+    enviado_btn = st.button("Descargar")
+    if enviado_btn:
+        crear_pdf(controller.actas[acta_evaluar])

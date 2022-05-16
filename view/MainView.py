@@ -6,6 +6,7 @@ from view.Inicio import mesaje_inicio_asistente, mesaje_inicio_jurados, mesaje_i
 from view.EvalTrabajoGrado import agregar_acta, agregar_evaluacion
 from view.ListaActa import listar_actas
 from view.EditarCriterios import base
+from view.ExportarActa import elegir_acta_imprimir
 
 class MainView:
     def __init__(self) -> None:
@@ -55,7 +56,7 @@ class MainView:
 
         elif self.menu_actual == "Jurados":
             with st.sidebar:
-                self.menu_actual = option_menu('Menu', ["Jurados", 'Exportar Acta', 'Evaluar Trabajo'],
+                self.menu_actual = option_menu('Menu', ["Jurados", 'Evaluar Trabajo', 'Exportar Acta'],
                                                icons=["briefcase", 'file-pdf', 'pencil-square'],
                                                menu_icon="display", default_index=0,
                                                styles={"nav-link-selected": {"background-color": "#2C6394"}, })
@@ -64,6 +65,8 @@ class MainView:
                 mesaje_inicio_jurados(st)
             elif self.menu_actual == "Evaluar Trabajo":
                 agregar_evaluacion(st, self.controller)
+            elif self.menu_actual == "Exportar Acta":
+                elegir_acta_imprimir(st, self.controller)
 
         elif self.menu_actual == "Directora":
             with st.sidebar:
