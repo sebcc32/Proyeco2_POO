@@ -1,7 +1,7 @@
 from model.Acta import Acta
-
 from model.Criterio import Criterio
 import json
+import time
 
 file = open("model\ListaCriterios.json", "r")
 js = file.read()
@@ -15,7 +15,16 @@ def agregar_acta(st, controller):
     acta_obj = Acta()
 
     with col1:
-        acta_obj.numero = st.number_input("Id acta")
+        try:
+            detector = False
+            acta_obj.numero = st.number_input("Id acta")
+            for llave in controller.actas:
+                if(controller.actas[llave].numero == acta_obj.numero):
+                    detector = True
+        except detector == True:
+            st.write("Ya existe esta acta!")
+            time.sleep(5)
+            agregar_acta(st, controller)
         acta_obj.nombre_del_trabajo = st.text_input("Titulo del trabajo")
         acta_obj.fecha = st.date_input("Fecha de creacion del trabajo")
     with col2:
@@ -32,6 +41,7 @@ def agregar_acta(st, controller):
         controller.agregar_acta(acta_obj)
         st.write("El archivo se ha creado exitosamente")
     return controller
+
 
 def agregar_evaluacion(st, controller):
     contador = 0
