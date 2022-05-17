@@ -1,3 +1,9 @@
+"""
+    Clase Acta en la cual se almacena la informacion de un acta,
+    su ID, autor, nombre, tipo, director, jurados, nota y criterios
+    que se le fueron evaluados.
+"""
+
 import json
 
 class Acta:
@@ -20,9 +26,11 @@ class Acta:
         self.criterio = {}
 
     def agregar_criterio(self, criterio):
+        "Agrega el criterio al acta"
         self.criterio = criterio
 
     def agregar_nota_definitiva(self, nota):
+        "Agrega la nota al acta"
         self.nota = nota
 
     def __str__(self) -> str:

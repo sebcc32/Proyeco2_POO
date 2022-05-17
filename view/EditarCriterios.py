@@ -1,10 +1,12 @@
 import json
 
+"Se encarga de leer los datos dentro del Json que almacena cada uno de los criterios que hay hasta el momento"
 file = open("model\ListaCriterios.json", "r")
 js = file.read()
 lista_criterios = json.loads(js)
 file.close()
 
+"Funcion que se encarga de eliminar, crear y editar los criterios"
 def editar_criterios(st):
 
     with st.expander("Editar criterio"):
@@ -31,6 +33,7 @@ def editar_criterios(st):
             lista_criterios[criterio_nuevo] = ponderado_nuevo
             st.success("El criterio se modifico correctamente")
 
+    "Se encarga de escribir los nuevos datos dentro del Json en el cual se guardan los criterios"
     file = open("model\ListaCriterios.json", "w")
     criterios = json.dumps(lista_criterios, indent=4)
     file.write(criterios)

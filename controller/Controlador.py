@@ -1,3 +1,9 @@
+
+"""
+    Diccionario en el cual se guardan las actas
+    y su ID es el key de estas
+"""
+
 class EvaluadorController:
     def __init__(self) -> None:
         super().__init__()

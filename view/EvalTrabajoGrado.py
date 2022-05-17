@@ -1,15 +1,14 @@
 from model.Acta import Acta
 from model.Criterio import Criterio
 import json
-import time
 
+"Se encarga de leer los datos dentro del Json que almacena cada uno de los criterios que hay hasta el momento"
 file = open("model\ListaCriterios.json", "r")
 js = file.read()
 lista_criterios = json.loads(js)
 
+"Funcion encargada de crear a"
 def agregar_acta(st, controller):
-    # Objecto que modelará el formulario
-
     col1, col2, col3 = st.columns(3)
 
     acta_obj = Acta()

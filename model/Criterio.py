@@ -1,5 +1,10 @@
 import json
 
+""""
+    Clase Criterio, en la cual se almacena la informacion de los criterios,
+    su nombre, observaciones, notas por cada jurado y el ponderado de esta.
+"""
+
 class Criterio:
 
     def __init__(self) -> None:
