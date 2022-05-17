@@ -5,7 +5,7 @@ from controller.Controlador import EvaluadorController
 from view.Inicio import mesaje_inicio_asistente, mesaje_inicio_jurados, mesaje_inicio_directora
 from view.EvalTrabajoGrado import agregar_acta, agregar_evaluacion
 from view.ListaActa import listar_actas
-from view.EditarCriterios import base
+from view.EditarCriterios import editar_criterios
 from view.ExportarActa import elegir_acta_imprimir
 
 class MainView:
@@ -70,8 +70,7 @@ class MainView:
 
         elif self.menu_actual == "Directora":
             with st.sidebar:
-                self.menu_actual = option_menu('Menu', ["Directora", 'Modificar Criterios', 'Ver Historicos',
-                                                        'Editar Criterios'],
+                self.menu_actual = option_menu('Menu', ["Directora", 'Modificar Criterios', 'Ver Historicos'],
                                                icons=["cast", 'vector-pen', 'stack-overflow'],
                                                menu_icon="display", default_index=0,
                                                styles={"nav-link-selected": {"background-color": "#2C6394"}, })
@@ -80,8 +79,8 @@ class MainView:
                 mesaje_inicio_directora(st)
             elif self.menu_actual == "Ver Historicos":
                 listar_actas(st, self.controller)
-            elif self.menu_actual == "Modificar Criterioss":
-                base(st)
+            elif self.menu_actual == "Modificar Criterios":
+                editar_criterios(st)
 
 # Main call
 if __name__ == "__main__":
