@@ -39,7 +39,7 @@ def crear_pdf(acta):
         archivo.drawString(30, y, f'{identificador}. {crit.descripcion}')
         identificador += 1
         archivo.setFont('Helvetica', 12)
-        nota_parcial = ( (crit.nota1 + crit.nota2) / 2 ) * crit.ponderado
+        nota_parcial = ( (crit.nota1 + crit.nota2) / 2 )
         y-=20
         archivo.drawString(30, y, f'Nota parcial: {nota_parcial}')
         archivo.drawString(450, y, f'Ponderado: {crit.ponderado * 100}%')
@@ -59,8 +59,41 @@ def crear_pdf(acta):
             archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
             archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
 
+    if (y <= 0):
+        y = 660
+        archivo.showPage()
+        archivo.setFont('Helvetica-Bold', 12)
+        archivo.drawString(170, 680, 'ACTA DE EVALUACION DE TRABAJO DE GRADO')
+        archivo.drawString(30, 700, f'ACTA: {acta.numero}')
+        archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
+        archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
+        archivo.drawString(30, y, f'Como resultado de estas calificaciones parciales y sus ponderciones, la calificacion del trabajo')
+        archivo.drawString(30, y-20, f'de grado es: {acta.nota}')
+        archivo.drawString(30, y-40, 'Observaciones adicionales: ')
+        archivo.line(30, y-60, 580, y-60)
+        archivo.line(30, y-80, 580, y-80)
+        archivo.line(100, y - 140, 200, y - 140)
+        archivo.drawString(120, y-160, "Jurado 1")
+
+        archivo.line(400, y - 140, 500, y - 140)
+        archivo.drawString(420, y-160, "Jurado 2")
+
+    else:
+        archivo.setFont('Helvetica-Bold', 12)
+        archivo.drawString(30, y, f'Como resultado de estas calificaciones parciales y sus ponderciones, la calificacion del trabajo')
+        archivo.drawString(30, y-20, f'de grado es: {acta.nota}')
+        archivo.drawString(30, y-40, 'Observaciones adicionales: ')
+        archivo.line(30, y-60, 580, y-60)
+        archivo.line(30, y-80, 580, y-80)
+        archivo.line(100, y - 140, 200, y - 140)
+        archivo.drawString(120, y-160, "Jurado 1")
+
+        archivo.line(400, y - 140, 500, y - 140)
+        archivo.drawString(420, y-160, "Jurado 2")
+
+
     archivo.save()
-    os.startfile("form.pdf")
+    os.startfile("Acta.pdf")
 
 def elegir_acta_imprimir(st, controller):
     
