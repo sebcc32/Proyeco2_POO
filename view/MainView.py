@@ -23,7 +23,7 @@ class MainView:
 
     def _dibujar_layout(self):
         # Set page title, icon, layout wide (more used space in central area) and sidebar initial state
-        st.set_page_config(page_title="Actas de Grado", page_icon='', layout="wide",
+        st.set_page_config(page_title="Actas de Grado", page_icon='🎓', layout="wide",
                            initial_sidebar_state="expanded")
         # Defines the number of available columns del area principal
         # self.col1, self.col2, self.col3 = st.columns([1, 6, 1])
@@ -80,7 +80,7 @@ class MainView:
                 mesaje_inicio_directora(st)
             elif self.menu_actual == "Ver Historicos":
                 listar_actas(st, self.controller)
-            elif self.menu_actual == "Editar Criterios":
+            elif self.menu_actual == "Modificar Criterioss":
                 base(st)
 
 # Main call
