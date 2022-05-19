@@ -8,7 +8,11 @@ from view.ListaActa import listar_actas
 from view.EditarCriterios import editar_criterios
 from view.ExportarActa import elegir_acta_imprimir
 
+
+"""Clase del main view"""
+
 class MainView:
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -22,13 +26,16 @@ class MainView:
         self._dibujar_layout()
 
     def _dibujar_layout(self):
-        # Set page title, icon, layout wide (more used space in central area) and sidebar initial state
+
+        """
+        Se establece el nombre e icono de la pestaña de la pagina
+        """
         st.set_page_config(page_title="Actas de Grado", page_icon='🎓', layout="wide",
                            initial_sidebar_state="expanded")
-        # Defines the number of available columns del area principal
-        # self.col1, self.col2, self.col3 = st.columns([1, 6, 1])
 
-        # Define lo que abrá en la barra de menu
+        """
+        Se establece el menu principal para elegir a los usuarios
+        """
         self.menu_actual = option_menu(None, ["Asistente", 'Jurados', 'Directora'],
                                        icons=['person', 'people', 'file-person'],
                                        menu_icon="cast", default_index=0, orientation="horizontal",
@@ -39,6 +46,7 @@ class MainView:
                                                         "margin": "0px", "--hover-color": "#FFFFFF"},
                                            "nav-link-selected": {"background-color": "#2C6394", "color": "white"}, })
 
+    "Funcion encargada del menu, en la cual muestra cada menu de cada usuario y redirige al usuario a su menu designado "
     def controlar_menu(self):
         if self.menu_actual == "Asistente":
             with st.sidebar:
@@ -82,7 +90,6 @@ class MainView:
             elif self.menu_actual == "Modificar Criterios":
                 editar_criterios(st)
 
-# Main call
 if __name__ == "__main__":
     main = MainView()
     main.controlar_menu()

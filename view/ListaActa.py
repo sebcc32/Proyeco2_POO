@@ -1,12 +1,10 @@
-
+"Funcion que se encarga de itera los elementos de evaluacion agregados para mostrarlos"
 def listar_actas(st, controller):
-    #Itera los elementos de evaluacion agregados y los muestra
-
     st.title("Datos guardados:")
-        #No sirve listar, intente recorrer el diccionario actas pero no quiere servir
-    for id in controller.actas:                                #Ni con el metodo que mostro la profesora sirve, no se como cambiar eso
+    for id in controller.actas:
         with st.container():
             acta = controller.actas[id]
+            "Crea un expander para cada una de las actas basandose en el ID del acta"
             with st.expander(f"Acta # {acta.numero}"):
                 st.write("Fecha: ", str(acta.fecha))
                 st.write("Autor: ", acta.autor)
@@ -15,6 +13,7 @@ def listar_actas(st, controller):
                 st.write("Co-director: ", acta.codirector)
                 st.write("Jurado 1: ", acta.jurado1)
                 st.write("Jurado 2: ", acta.jurado2)
+                "Recorre los criterios evaluados en el acta para mostrarlos con su information adicional"
                 for clave in acta.criterio:
                     with st.container():
                         crit = acta.criterio[clave]

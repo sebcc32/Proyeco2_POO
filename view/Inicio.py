@@ -1,3 +1,8 @@
+""""
+    Aqui se encuentran los menus de cada tipo de usuario
+    y una descripcion de lo que pueden hacer en el sistema.
+"""
+
 
 def mesaje_inicio_asistente(st):
     st.title("Bienvenido Asistente")

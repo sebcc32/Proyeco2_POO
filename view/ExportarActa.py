@@ -2,8 +2,8 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
 
+"Funcion encargada de crear el PDF del acta requerida"
 def crear_pdf(acta):
-
     archivo = canvas.Canvas("form.pdf", pagesize=letter)
     archivo.setLineWidth(.3)
 
@@ -30,6 +30,7 @@ def crear_pdf(acta):
     archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
     archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
 
+    "Proceso encargado de agregar cada criterio con su informacion agregada por los jueces"
     identificador = 1
     y = 400
     for clave in acta.criterio:
@@ -59,6 +60,7 @@ def crear_pdf(acta):
             archivo.drawString(450, 700, f'FECHA: {acta.fecha}')
             archivo.drawImage("https://www2.javerianacali.edu.co/sites/ujc/files/field/image/puj_logo_azul_copia1_0.png", 20, 720, 170, 60)
 
+    "Verifica que el Y en el PDF al terminar la anterior secuencia no este fuera de la distacia requerida para asi crear o no una nueva pagina"
     if (y <= 0):
         y = 660
         archivo.showPage()
@@ -95,8 +97,8 @@ def crear_pdf(acta):
     archivo.save()
     os.startfile("Acta.pdf")
 
+"Funcion en la cual se escoge el acta que se desea guardar en formato PDF"
 def elegir_acta_imprimir(st, controller):
-    
     st.title("Actas almacenadas:")
 
     actas_llaves = controller.actas.keys()
