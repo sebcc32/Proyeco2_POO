@@ -46,9 +46,13 @@ def editar_criterios(st):
                 lista_criterios[criterio_nuevo] = ponderado_nuevo
                 st.success("El criterio se creo correctamente")
             else:
-                ponderado_nuevo = 1 - revisar_criterios()
-                lista_criterios[criterio_nuevo] = ponderado_nuevo
-                st.info("El criterio se creo correctamente, pero el poderado fue mas grande de lo esperado. Por lo cual se le agrego un ponderado que cumpliera con los requisitos del sistema")
+                if revisar_criterios()<0.99:
+                    ponderado_nuevo = 1 - revisar_criterios()
+                    lista_criterios[criterio_nuevo] = ponderado_nuevo
+                    st.info("El criterio se creo correctamente, pero el poderado fue mas grande de lo esperado. Por lo cual se le agrego un ponderado que cumpliera con los requisitos del sistema.")
+                else:
+                    st.error("Oh no! Tiene todos los criterios posible, la suma de los ponderados de cada criterio ya esta en un 100%. Si desea agregar uno nuevo, edite los ponderados para dejar un espacio a su nuevo criterio.")
+
 
     "Se encarga de escribir los nuevos datos dentro del Json en el cual se guardan los criterios"
     file = open("model\ListaCriterios.json", "w")
