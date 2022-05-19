@@ -6,6 +6,13 @@ js = file.read()
 lista_criterios = json.loads(js)
 file.close()
 
+"Suma todos los ponderadoes de cada criterio y manda la suma de esto para ser revizado al agregar y editar criterios"
+def revisar_criterios():
+    suma = 0
+    for llave in lista_criterios:
+        suma+=lista_criterios[llave]
+    return suma
+
 "Funcion que se encarga de eliminar, crear y editar los criterios"
 def editar_criterios(st):
 
@@ -16,9 +23,14 @@ def editar_criterios(st):
         ponderado = st.number_input("Nuevo ponderado")
         if st.button("Guardar"):
             lista_criterios[new_key] = lista_criterios[old_key]
-            lista_criterios[new_key] = ponderado
             del lista_criterios[old_key]
-            st.success("El criterio se modifico correctamente")
+            if revisar_criterios() + ponderado <= 1:
+                lista_criterios[new_key] = ponderado
+                st.success("El criterio se modifico correctamente")
+            else:
+                ponderado = 1 - revisar_criterios()
+                lista_criterios[new_key] = ponderado
+                st.info("El criterio se modifico correctamente, pero el poderado fue mas grande de lo esperado. Por lo cual se le agrego un ponderado que cumpliera con los requisitos del sistema")
 
     with st.expander("Eliminar criterio"):
         old_key = st.selectbox('Criterio a evaluar?', lista_criterios, key = 0)
@@ -30,8 +42,13 @@ def editar_criterios(st):
         criterio_nuevo = st.text_input("Nuevo criterio")
         ponderado_nuevo = st.number_input("Ponderado del criterio")
         if st.button("Guardar", key = 1):
-            lista_criterios[criterio_nuevo] = ponderado_nuevo
-            st.success("El criterio se modifico correctamente")
+            if revisar_criterios() + ponderado_nuevo <= 1:
+                lista_criterios[criterio_nuevo] = ponderado_nuevo
+                st.success("El criterio se creo correctamente")
+            else:
+                ponderado_nuevo = 1 - revisar_criterios()
+                lista_criterios[criterio_nuevo] = ponderado_nuevo
+                st.info("El criterio se creo correctamente, pero el poderado fue mas grande de lo esperado. Por lo cual se le agrego un ponderado que cumpliera con los requisitos del sistema")
 
     "Se encarga de escribir los nuevos datos dentro del Json en el cual se guardan los criterios"
     file = open("model\ListaCriterios.json", "w")
