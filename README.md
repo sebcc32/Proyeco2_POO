@@ -21,6 +21,5 @@ ___
 # Manual técnico
 ![](Imagenes/Imagen_UML.png)
 
-
 > Class `Acta`
 ___
