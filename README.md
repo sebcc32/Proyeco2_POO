@@ -19,7 +19,7 @@ aprobación del trabajo final.
 * Al final de cada acta se incluye un espacio en el que los jurados ponen sus firmas. Además, de la calificación final de todos los criterios.
 ___
 # Manual técnico
-![](Imagenes/Imagen_UML.png)
+[![LINK](Imagenes/Imagen_UML.png)](https://drive.google.com/file/d/1MK1o4HypcTjOP_YV2KTAQA6Ou0AZGJEj/view?usp=sharing)
 
 > **Class** `Acta`\
 > Clase encargada de definir los valores que contiene cada una de las actas, recibe 
