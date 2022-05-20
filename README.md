@@ -21,5 +21,28 @@ ___
 # Manual técnico
 ![](Imagenes/Imagen_UML.png)
 
-> Class `Acta`
+> **Class** `Acta`\
+> Clase encargada de definir los valores que contiene cada una de las actas, recibe 
+> del asistente el ID, fecha, autor, nombre del trabajo, tipo de trabajo (Aplicado o Investigación), director, codirector
+> jurado 1 y 2, además de crear automáticamente la nota final y el diccionario de criterios con valores vacíos.
+> Retornando al final un acta.
+
+> **Class** `Criterio`\
+> Clase encargada de definir uno de los criterios que contendrá un acta, recibe de uno de los jurados, la observación
+ nota uno y nota dos, recibe automáticamente la descripción del criterio a evaluar y el ponderado del mismo. Esto se
+> repite para cada uno de los criterios y como salida da un criterio calificado, cada uno se almacena y se envian en conjunto al
+> acta que se está calificando.
+
+> **Class** `EvaluadorController`\
+> Clase encarga de almacenar las todas las actas dentro del sistema dentro de un diccionario,
+> facilitando así el manejo de esta usando como Key el ID del acta.
+
+> **Class** `MainView`\
+> Clase en la cual se encuentra la vista del sistema. En este, se puede encontrar
+> la división de los roles (Asistente, Jurado y Director). Cada uno de ellos tiene un menú único con los cargos específicos de su rol.
+> \
+> \
+![](Imagenes/ImagenAsistente.png)
+![](Imagenes/ImagenDirector.png)
+![](Imagenes/ImagenJurados.png)
 ___
