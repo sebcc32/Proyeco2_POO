@@ -9,7 +9,7 @@ from view.EditarCriterios import editar_criterios
 from view.ExportarActa import elegir_acta_imprimir
 
 
-"""Clase del main view"""
+# "Clase del main view"
 
 class MainView:
 
@@ -26,12 +26,6 @@ class MainView:
         self._dibujar_layout()
 
     def _dibujar_layout(self):
-
-        """
-        Se establece el nombre e icono de la pestaña de la pagina
-        """
-        st.set_page_config(page_title="Actas de Grado", page_icon='🎓', layout="wide",
-                           initial_sidebar_state="expanded")
 
         """
         Se establece el menu principal para elegir a los usuarios
@@ -90,6 +84,7 @@ class MainView:
             elif self.menu_actual == "Modificar Criterios":
                 editar_criterios(st)
 
+# Main call
 if __name__ == "__main__":
     main = MainView()
     main.controlar_menu()
